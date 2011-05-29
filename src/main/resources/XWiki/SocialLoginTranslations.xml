@@ -11,15 +11,15 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1306685572000</creationDate>
-<date>1306686659000</date>
-<contentUpdateDate>1306686659000</contentUpdateDate>
-<version>1.6</version>
-<title></title>
+<date>1306689202000</date>
+<contentUpdateDate>1306689202000</contentUpdateDate>
+<version>3.1</version>
+<title>Social Login Translations</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
 <validationScript></validationScript>
 <comment></comment>
-<minorEdit>true</minorEdit>
+<minorEdit>false</minorEdit>
 <syntaxId>xwiki/2.0</syntaxId>
 <hidden>false</hidden>
 <content>xwiki.socialLogin.youMustBeNewHere=You must be new here
