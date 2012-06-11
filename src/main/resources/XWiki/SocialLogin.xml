@@ -1945,6 +1945,7 @@ cGVydGllc1BLBQYAAAAALwAvAF0QAABxfgEAAAA=
 
 #loginForm div.provider {
   margin-bottom:20px;
+  padding-left: 40px;
 }
 
 #createUsernameForm fieldset.xwikimessage legend {

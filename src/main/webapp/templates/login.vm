@@ -30,7 +30,7 @@
   <!-- previous login errors -->
   #error($message)
 #end
-#set($hasSocialLogin = false)
+#set($socialLoginButtonsEnabled = false)
 #if($xwiki.exists('XWiki.SocialLoginConfiguration'))
   #set($socialLoginConfigurationDocument = $xwiki.getDocument('XWiki.SocialLoginConfiguration'))
   #set($socialLoginConfiguration = $socialLoginConfigurationDocument.getObject('XWiki.SocialLoginConfigurationClass'))
@@ -39,12 +39,12 @@
   #if("$!providersAsString" != '')
     #set($providers = $providersAsString.split('\n'))
   #end
-  #if($providers.size() > 0)
-    #set($hasSocialLogin = true)
+  #if($providers.size() > 0 && $socialLoginConfiguration.getProperty('loginButtons').value == '1')
+    #set($socialLoginButtonsEnabled = true)
     #set($ok = $xwiki.ssx.use('XWiki.SocialLogin'))
   #end
 #end
-#if($hasSocialLogin)
+#if($socialLoginButtonsEnabled)
 <div class="column half">
 #end
 <table class="xwikilogintable" summary="$msg.get('loginform')">
@@ -68,7 +68,7 @@
 #if($xwiki.exists('XWiki.ResetPassword'))
   <div style="font-size: 70%; margin-top: 2em;">Forgot your <a href="$xwiki.getURL('XWiki.ForgotUsername')">username</a> or <a href="$xwiki.getURL('XWiki.ResetPassword')">password</a>?</div>
 #end
-#if($hasSocialLogin)
+#if($socialLoginButtonsEnabled)
 </div>
 <div class="column half socialLoginProviders">
   #foreach($provider in $providers)
