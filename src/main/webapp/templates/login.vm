@@ -75,12 +75,12 @@
     <div class="provider">
       #set($link = $xwiki.getURL('XWiki.SocialLogin', 'view', "provider=${provider.toLowerCase()}"))
       <a href="${link}" title="$msg.get('xwiki.socialLogin.signInWith', [$provider])">
-	  #if($socialLoginConfigurationDocument.getAttachment("${provider.toLowerCase()}.png"))
-	    <img src="$socialLoginConfigurationDocument.getAttachmentURL("${provider.toLowerCase()}.png")" />
-	  #else
-	    $msg.get('xwiki.socialLogin.signInWith', [$provider])
-	  #end
-	  </a>
+      #if($socialLoginConfigurationDocument.getAttachment("${provider.toLowerCase()}.png"))
+        <img src="$socialLoginConfigurationDocument.getAttachmentURL("${provider.toLowerCase()}.png")" />
+      #else
+        $msg.get('xwiki.socialLogin.signInWith', [$provider])
+      #end
+      </a>
     </div>
   #end
 </div>
