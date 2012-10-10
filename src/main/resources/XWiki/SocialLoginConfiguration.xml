@@ -359,14 +359,33 @@ AAAASUVORK5CYII=
 <defaultWeb></defaultWeb>
 <nameField></nameField>
 <validationScript></validationScript>
-<providers>
+<loginButtons>
+<customDisplay></customDisplay>
+<defaultValue></defaultValue>
 <disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType></displayType>
+<name>loginButtons</name>
+<number>2</number>
+<prettyName>Enable buttons on login form</prettyName>
+<unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</loginButtons>
+<providers>
+<customDisplay></customDisplay>
+<disabled>0</disabled>
+<editor>---</editor>
 <name>providers</name>
 <number>1</number>
-<prettyName>providers</prettyName>
+<picker>0</picker>
+<prettyName>List of providers</prettyName>
 <rows>5</rows>
 <size>40</size>
 <unmodifiable>0</unmodifiable>
+<validationMessage></validationMessage>
+<validationRegExp></validationRegExp>
 <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
 </providers>
 </class>
@@ -374,6 +393,9 @@ AAAASUVORK5CYII=
 <number>0</number>
 <className>XWiki.SocialLoginConfigurationClass</className>
 <guid>79634c50-2f52-4111-8560-de2f7fb3638b</guid>
+<property>
+<loginButtons>1</loginButtons>
+</property>
 <property>
 <providers>Facebook
 Twitter
