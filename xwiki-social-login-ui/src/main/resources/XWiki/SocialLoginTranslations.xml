@@ -11,9 +11,9 @@
 <customClass></customClass>
 <contentAuthor>XWiki.Admin</contentAuthor>
 <creationDate>1306685572000</creationDate>
-<date>1306689202000</date>
-<contentUpdateDate>1306689202000</contentUpdateDate>
-<version>3.1</version>
+<date>1350466798000</date>
+<contentUpdateDate>1350466798000</contentUpdateDate>
+<version>2.1</version>
 <title>Social Login Translations</title>
 <template></template>
 <defaultTemplate></defaultTemplate>
@@ -31,6 +31,7 @@ xwiki.socialLogin.youMustPickUsername=You must pick up a username
 xwiki.socialLogin.usernameAlreadyTaken=Username already taken
 xwiki.socialLogin.nothingToDo=Nothing to do
 xwiki.socialLogin.genericError=Something went wrong : {0}
-
+xwiki.socialLogin.unauthorizedDomainError=You are not from an authorized domain
 xwiki.socialLogin.signInWith=Sign in with {0}
-</content></xwikidoc>
+
+xwiki.social.facebook=Facebook</content></xwikidoc>

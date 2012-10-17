@@ -1,0 +1,6 @@
+org.xwiki.social.authentication.internal.DefaultSocialAuthConfiguration
+org.xwiki.social.authentication.internal.SocialAuthDocumentConfigurationSource
+org.xwiki.social.authentication.internal.SocialAuthConfigurationSource
+org.xwiki.social.authentication.internal.DefaultSocialAuthManager
+org.xwiki.social.authentication.internal.SocialAuthScriptService
+org.xwiki.social.authentication.internal.FacebookProfilePictureProviderTransformer

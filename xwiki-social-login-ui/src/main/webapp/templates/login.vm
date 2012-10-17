@@ -31,15 +31,9 @@
   #error($message)
 #end
 #set($socialLoginButtonsEnabled = false)
-#if($xwiki.exists('XWiki.SocialLoginConfiguration'))
-  #set($socialLoginConfigurationDocument = $xwiki.getDocument('XWiki.SocialLoginConfiguration'))
-  #set($socialLoginConfiguration = $socialLoginConfigurationDocument.getObject('XWiki.SocialLoginConfigurationClass'))
-  #set($providersAsString = $socialLoginConfiguration.getProperty('providers').value)
-  #set($providers = [])
-  #if("$!providersAsString" != '')
-    #set($providers = $providersAsString.split('\n'))
-  #end
-  #if($providers.size() > 0 && $socialLoginConfiguration.getProperty('loginButtons').value == '1')
+#if($services.socialAuth)
+  #set($providers = $services.socialAuth.availableProviders)
+  #if($providers.size() > 0 && $services.socialAuth.loginButtonsEnabled)
     #set($socialLoginButtonsEnabled = true)
     #set($ok = $xwiki.ssx.use('XWiki.SocialLogin'))
   #end
@@ -69,18 +63,20 @@
   <div style="font-size: 70%; margin-top: 2em;">Forgot your <a href="$xwiki.getURL('XWiki.ForgotUsername')">username</a> or <a href="$xwiki.getURL('XWiki.ResetPassword')">password</a>?</div>
 #end
 #if($socialLoginButtonsEnabled)
+#set($socialLoginConfigurationDocument = $xwiki.getDocument("XWiki.SocialLoginConfiguration"))
 </div>
 <div class="column half socialLoginProviders">
   #foreach($provider in $providers)
     <div class="provider">
-      #set($link = $xwiki.getURL('XWiki.SocialLogin', 'view', "provider=${provider.toLowerCase()}"))
+      #set($link = $xwiki.getURL('XWiki.XWikiLogin', 'login', "sl_provider=${provider.trim().toLowerCase()}&xredirect=$!{request.xredirect}"))
       <a href="${link}" title="$msg.get('xwiki.socialLogin.signInWith', [$provider])">
-      #if($socialLoginConfigurationDocument.getAttachment("${provider.toLowerCase()}.png"))
-        <img src="$socialLoginConfigurationDocument.getAttachmentURL("${provider.toLowerCase()}.png")" />
+      #set($attachmentName = "${provider.trim().toLowerCase()}.png")
+      #if($socialLoginConfigurationDocument.getAttachment($attachmentName))
+        <img src="$socialLoginConfigurationDocument.getAttachmentURL($attachmentName)" />
       #else
         $msg.get('xwiki.socialLogin.signInWith', [$provider])
       #end
-      </a>
+    </a>
     </div>
   #end
 </div>

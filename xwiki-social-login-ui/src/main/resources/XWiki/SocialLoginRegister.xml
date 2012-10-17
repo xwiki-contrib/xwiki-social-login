@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>XWiki</web>
+<name>SocialLoginRegister</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent>Main.WebHome</parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1350405683000</creationDate>
+<date>1350466701000</date>
+<contentUpdateDate>1350466701000</contentUpdateDate>
+<version>8.1</version>
+<title>Registration</title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>false</minorEdit>
+<syntaxId>xwiki/2.1</syntaxId>
+<hidden>false</hidden>
+<object>
+<class>
+<name>XWiki.StyleSheetExtension</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<cache>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>0</multiSelect>
+<name>cache</name>
+<number>5</number>
+<prettyName>Caching policy</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>1</size>
+<unmodifiable>0</unmodifiable>
+<values>long|short|default|forbid</values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</cache>
+<code>
+<disabled>0</disabled>
+<name>code</name>
+<number>2</number>
+<prettyName>Code</prettyName>
+<rows>20</rows>
+<size>50</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+</code>
+<name>
+<disabled>0</disabled>
+<name>name</name>
+<number>1</number>
+<prettyName>Name</prettyName>
+<size>30</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+</name>
+<parse>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>yesno</displayType>
+<name>parse</name>
+<number>4</number>
+<prettyName>Parse content</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</parse>
+<use>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>0</multiSelect>
+<name>use</name>
+<number>3</number>
+<prettyName>Use this extension</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator> </separator>
+<separators> ,|</separators>
+<size>1</size>
+<unmodifiable>0</unmodifiable>
+<values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+</use>
+</class>
+<name>XWiki.SocialLoginRegister</name>
+<number>0</number>
+<className>XWiki.StyleSheetExtension</className>
+<guid>a4940bff-dd7e-45ac-835c-70e1b30812a5</guid>
+<property>
+<cache>long</cache>
+</property>
+<property>
+<code>fieldset.xwikimessage legend {
+  letter-spacing:0.125em;
+}
+
+fieldset.xwikimessage {
+  width:450px;
+}
+
+fieldset.xwikimessage p.message {
+  margin-top:15px;
+}
+
+#contentmenu, #hierarchy, #document-info, #xdocFooter, #xwikidata {
+  display: none;
+}
+
+#document-title h1 {
+  margin-top: 15px;
+}</code>
+</property>
+<property>
+<name></name>
+</property>
+<property>
+<parse></parse>
+</property>
+<property>
+<use>currentPage</use>
+</property>
+</object>
+<object>
+<class>
+<name>XWiki.XWikiRights</name>
+<customClass></customClass>
+<customMapping></customMapping>
+<defaultViewSheet></defaultViewSheet>
+<defaultEditSheet></defaultEditSheet>
+<defaultWeb></defaultWeb>
+<nameField></nameField>
+<validationScript></validationScript>
+<allow>
+<defaultValue>1</defaultValue>
+<disabled>0</disabled>
+<displayFormType>select</displayFormType>
+<displayType>allow</displayType>
+<name>allow</name>
+<number>4</number>
+<prettyName>Allow/Deny</prettyName>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+</allow>
+<groups>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>1</multiSelect>
+<name>groups</name>
+<number>1</number>
+<prettyName>Groups</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator> </separator>
+<size>5</size>
+<unmodifiable>0</unmodifiable>
+<usesList>1</usesList>
+<classType>com.xpn.xwiki.objects.classes.GroupsClass</classType>
+</groups>
+<levels>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>1</multiSelect>
+<name>levels</name>
+<number>2</number>
+<prettyName>Levels</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator> </separator>
+<size>3</size>
+<unmodifiable>0</unmodifiable>
+<classType>com.xpn.xwiki.objects.classes.LevelsClass</classType>
+</levels>
+<users>
+<cache>0</cache>
+<disabled>0</disabled>
+<displayType>select</displayType>
+<multiSelect>1</multiSelect>
+<name>users</name>
+<number>3</number>
+<prettyName>Users</prettyName>
+<relationalStorage>0</relationalStorage>
+<separator> </separator>
+<size>5</size>
+<unmodifiable>0</unmodifiable>
+<usesList>1</usesList>
+<classType>com.xpn.xwiki.objects.classes.UsersClass</classType>
+</users>
+</class>
+<name>XWiki.SocialLoginRegister</name>
+<number>0</number>
+<className>XWiki.XWikiRights</className>
+<guid>ca82eb2e-3438-409e-9dda-8477a8d3070b</guid>
+<property>
+<allow>1</allow>
+</property>
+<property>
+<groups>XWiki.XWikiAllGroup,</groups>
+</property>
+<property>
+<levels>view</levels>
+</property>
+<property>
+<users>XWiki.XWikiGuest</users>
+</property>
+</object>
+<content>{{velocity}}
+#set($showForm = true)
+#if($request.method.equalsIgnoreCase('post'))
+  ##
+  ## Perform verification steps here...
+  ##
+  #set($formIsValid = true)
+  #if ("$!request.country" == '')
+    #set($formIsValid = false)
+{{error}}
+Country is mandatory
+{{/error}}
+  #end
+  #if($formIsValid)
+    #set($ok = $services.socialAuth.registerUser())
+    #if ($ok)
+      #set($showForm = false)
+{{info}}
+Your account has been successfully created [[Log-in and continue to your wiki&gt;&gt;Main.WebHome]]
+{{/info}}
+    #else
+{{error}}
+Failed to register
+{{/error}}
+    #end
+  #end
+
+#end
+##
+## First, let's get the current profile (org.brickred.socialauth.Profile) that has been associated with the current user session.
+## If no profile is present, it means the user never has connected his social account, and has nothing to do here.
+##
+#set($profile = $services.socialAuth.sessionProfile)
+#if(!$profile)
+{{warning}}
+Invalid workflow
+{{/warning}}
+#elseif($showForm)
+  ##
+  ## We have a profile associated with the session. Onward.
+  {{html clean=false}}
+&lt;p&gt;
+  &lt;br /&gt;
+  Sign up here so you can edit pages and participate in the wiki.
+&lt;/p&gt;
+#set($retrievedProperties = {})
+#foreach($property in ["firstName", "lastName", "email"])
+  #set($toEvaluate = "${escapetool.D}profile.${property}")
+  #set($ok = $retrievedProperties.put($property, "#evaluate($toEvaluate)"))
+#end
+&lt;form action="$doc.getURL('view')" method="post" class="xform third"&gt;
+  ## This is a fake form. We use it just for the (CSS) styles
+  ## There no button to submit it.
+  #foreach($property in $retrievedProperties.keySet())
+    &lt;dl&gt;
+      &lt;dt&gt;
+        &lt;label&gt;$property&lt;/label&gt;
+      &lt;/dt&gt;
+      &lt;dd&gt;
+        &lt;input type="text" disabled value="$retrievedProperties.get($property)" /&gt;
+      &lt;/dd&gt;
+    &lt;/dl&gt;
+  #end
+&lt;/form&gt;
+&lt;form action="$doc.getURL('view')" method="post" class="xform third"&gt;
+  &lt;fieldset&gt;
+    &lt;dl&gt;
+      &lt;dt&gt;
+        &lt;label&gt;Country&lt;span class="xRequired"&gt;(Required)&lt;/span&gt;&lt;/label&gt;
+      &lt;/dt&gt;
+      &lt;dd&gt;
+        &lt;input type="text" name="country" value="$!request.country" placeholder="your country..."/&gt;
+      &lt;/dd&gt;
+    &lt;/dl&gt;
+    &lt;dl&gt;
+      &lt;dt&gt;
+        &lt;label&gt;Language&lt;/label&gt;
+      &lt;/dt&gt;
+      &lt;dd&gt;
+        &lt;select name="language"&gt;
+          &lt;option value="en"&gt;English&lt;/option&gt;
+          &lt;option value="fr"&gt;French&lt;/option&gt;
+        &lt;/select&gt;
+      &lt;/dd&gt;
+    &lt;/dl&gt;
+    &lt;div class="buttons"&gt;
+      &lt;input type="submit" value="Confirm registration" class="button" /&gt;
+  &lt;/fieldset&gt;
+  &lt;/div&gt;
+&lt;/form&gt;
+  {{/html}}
+#end
+{{/velocity}}</content></xwikidoc>
