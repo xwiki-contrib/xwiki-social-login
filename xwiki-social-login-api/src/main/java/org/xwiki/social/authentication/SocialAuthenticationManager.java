@@ -84,6 +84,15 @@ public interface SocialAuthenticationManager
     DocumentReference connect(Map<String, String> requestParameters) throws SocialAuthException;
 
     /**
+     * Ensures a social session exists and is connected for the context user for the passed provider. This assumes the
+     * user already has a profile defined for the provider in its XWiki user profile.
+     * 
+     * @param provider the provider to ensure connection for
+     * @throws SocialAuthException when something goes wrong
+     */
+    void ensureConnected(String provider) throws SocialAuthException;
+
+    /**
      * Creates a new user based on a social session already established.
      * 
      * @param extraProperties the extra user properties to create the user with (XWiki.XWikiUsers properties)

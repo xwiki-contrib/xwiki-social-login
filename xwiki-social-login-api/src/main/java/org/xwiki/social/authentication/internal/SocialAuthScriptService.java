@@ -32,6 +32,21 @@ public class SocialAuthScriptService implements ScriptService
     @Inject
     private Execution execution;
 
+    public boolean ensureConnected(String provider)
+    {
+        if (!socialAuthManager.hasProvider(getContextUser(), provider)) {
+            // Nothing to do, it's not going to work
+            return false;
+        }
+
+        try {
+            this.socialAuthManager.ensureConnected(provider);
+            return true;
+        } catch (SocialAuthException e) {
+            return false;
+        }
+    }
+    
     public boolean associateAccount(String provider)
     {
         if (socialAuthManager.hasProvider(getContextUser(), provider)) {

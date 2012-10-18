@@ -115,6 +115,31 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         }
     }
 
+    public void ensureConnected(String providerId) throws SocialAuthException
+    {
+        XWikiContext context = getContext();
+        HttpServletRequest request = context.getRequest();
+        AuthProvider provider;
+        try {
+            if (StringUtils.isBlank(request.getParameter(CALLBACK_PARAMETER))) {
+                String url =
+                    request.getRequestURL() + "?" + StringUtils.defaultIfBlank(request.getQueryString(), "") + "&"
+                        + CALLBACK_PARAMETER + "=1&" + PROVIDER_PARAMETER + "=" + providerId;
+
+                this.requestConnection(providerId, url);
+
+            } else {
+                SocialAuthSession session =
+                    (SocialAuthSession) request.getSession().getAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE);
+
+                provider = session.getAuthManager().connect(SocialAuthUtil.getRequestParametersMap(request));
+                session.putAuthProvider(providerId, provider);
+            }
+        } catch (Exception e) {
+            throw new SocialAuthException("Failed to associate account", e);
+        }
+    }
+
     @Override
     public DocumentReference connect(Map<String, String> requestParameters) throws SocialAuthException
     {
@@ -318,7 +343,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
     }
 
     // /////////////////////////////////////////////////////////////////////////////////////////////
-    
+
     private void addSocialProfileToUser(Profile profile, DocumentReference user) throws SocialAuthException
     {
         boolean isGlobalConfiguration = isGlobalConfiguration();
@@ -351,7 +376,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
             if (StringUtils.isBlank(userObject.getStringValue("email"))) {
                 userObject.set("email", profile.getEmail(), context);
             }
-            
+
             if (!StringUtils.isBlank(profile.getProfileImageURL())
                 && StringUtils.isBlank(userObject.getStringValue("avatar"))) {
 
@@ -416,7 +441,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
             }
         }
     }
-    
+
     private String computeUsername(Profile profile)
     {
         // TODO let the format be defined in configuration
@@ -465,12 +490,12 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         return userDoc.getDocumentReference();
 
     }
-    
+
     private XWikiContext getContext()
     {
         return (XWikiContext) this.execution.getContext().getProperty("xwikicontext");
     }
-    
+
     private String getEncryptionKey()
     {
         String key = getContext().getWiki().Param("xwiki.authentication.encryptionKey");
@@ -496,7 +521,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
     {
         return "1".equals(getContext().getWiki().Param(GLOBAL_CONFIGURATION_KEY));
     }
-    
+
     private SocialAuthConfig getSocialAuthConfig()
     {
         if (this.config == null) {
