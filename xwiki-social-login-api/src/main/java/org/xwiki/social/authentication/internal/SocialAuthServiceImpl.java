@@ -117,9 +117,9 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
         HttpSession httpSession = request.getSession();
         SocialAuthenticationManager manager = Utils.getComponent(SocialAuthenticationManager.class);
 
-        SocialAuthSession session = (SocialAuthSession) httpSession.getAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE);
+        
 
-        if (StringUtils.isBlank(request.getParameter(PROVIDER_PARAMETER)) && !manager.isConnected(session)) {
+        if (StringUtils.isBlank(request.getParameter(PROVIDER_PARAMETER)) && !manager.isConnected()) {
             // Passing along to XWiki authentication
 
             // TODO add a parameter in configuration to declare if normal XWiki auth is allowed
@@ -129,12 +129,14 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
             return super.authenticate(login, password, context);
         }
 
+        SocialAuthSession session = manager.getSession();
+        
         String provider =
             StringUtils.defaultIfBlank(session != null ? session.getCurrentProvider() : null,
                 request.getParameter(PROVIDER_PARAMETER));
 
         try {
-            if (!manager.isConnected(session, provider) || password == null) {
+            if (!manager.isConnected(provider) || password == null) {
                 // If no social session is present in the user session, we try to associate one for the request
                 // provider by triggering a OAuth handshake. Note this is a two step process, meaning two consecutive
                 // requests will have to go through this call.

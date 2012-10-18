@@ -81,70 +81,41 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
     private SocialAuthConfig config;
 
-    public boolean userExists(String provider, String id)
+    @Override
+    public void associateAccount(String providerId) throws SocialAuthException
     {
-        return getUser(provider, id) != null;
-    }
-
-    public DocumentReference getUser(String provider, String id)
-    {
-        // we need to make sure this happens in the main wiki if the configuration says so
-        // this is already done in connect() but getUser can also be called from the Authenticator
-        boolean isGlobalConfiguration = isGlobalConfiguration();
         XWikiContext context = getContext();
-        String currentDatabase = context.getDatabase();
-        if (isGlobalConfiguration) {
-            context.setDatabase(getMainWikiName());
-        }
-
+        HttpServletRequest request = context.getRequest();
+        AuthProvider provider;
         try {
-            String queryStatement =
-                "from doc.object(XWiki.XWikiUsers) as user, doc.object(XWiki.SocialLoginProfileClass)"
-                    + " as profile where profile.provider = :provider and profile.validatedId = :validated";
+            if (StringUtils.isBlank(request.getParameter(CALLBACK_PARAMETER))) {
+                String url =
+                    request.getRequestURL() + "?" + request.getQueryString() + "&" + CALLBACK_PARAMETER + "=1&"
+                        + PROVIDER_PARAMETER + "=" + providerId;
 
-            Query query = this.queryManager.createQuery(queryStatement, Query.XWQL);
-            query.bindValue("provider", provider);
-            query.bindValue("validated", id);
+                this.requestConnection(providerId, url);
 
-            List<String> results = query.execute();
+            } else {
+                SocialAuthSession session =
+                    (SocialAuthSession) request.getSession().getAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE);
 
-            for (String reference : results) {
-                return getContext().getWiki().getDocument(reference, getContext()).getDocumentReference();
+                provider = session.getAuthManager().connect(SocialAuthUtil.getRequestParametersMap(request));
+                session.putAuthProvider(providerId, provider);
+                Profile profile = provider.getUserProfile();
+
+                if (getUser(providerId, profile.getValidatedId()) != null) {
+                    throw new SocialAuthException(
+                        "Refusing to associate account as it is already associated with a user on this wiki.");
+                }
+
+                this.addSocialProfileToUser(profile, getContext().getUserReference());
             }
-            return null;
-        } catch (QueryException e) {
-            this.logger.error("Failed to query for user with provider [{}] and id [{}]", provider, id);
-            return null;
-        } catch (XWikiException e) {
-            this.logger.error("Failed to query for user with provider [{}] and id [{}]", provider, id);
-            return null;
-        } finally {
-            if (isGlobalConfiguration) {
-                context.setDatabase(currentDatabase);
-            }
+        } catch (Exception e) {
+            throw new SocialAuthException("Failed to associate account", e);
         }
     }
 
-    public boolean isConnected()
-    {
-        return isConnected(getSession());
-    }
-
-    public boolean isConnected(String provider)
-    {
-        return isConnected(getSession(), provider);
-    }
-
-    public boolean isConnected(SocialAuthSession profile)
-    {
-        return profile != null && this.isConnected(profile, profile.getCurrentProvider());
-    }
-
-    public boolean isConnected(SocialAuthSession profile, String provider)
-    {
-        return profile != null && profile.getProfile(provider) != null;
-    }
-
+    @Override
     public DocumentReference connect(Map<String, String> requestParameters) throws SocialAuthException
     {
         AuthProvider provider;
@@ -212,12 +183,28 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
     }
 
-    private String getEncryptionKey()
+    @Override
+    public DocumentReference createUser(Map<String, String> extraProperties) throws XWikiException, SocialAuthException
     {
-        String key = getContext().getWiki().Param("xwiki.authentication.encryptionKey");
-        return key;
+        SocialAuthSession session = getSession();
+        if (session == null || session.getProfile() == null) {
+            throw new SocialAuthException("Illegal attempt at creating a user that is not associated");
+        }
+        return this.createUser(this.computeUsername(session.getProfile()), extraProperties);
     }
 
+    @Override
+    public DocumentReference createUser(String username, Map<String, String> extraProperties) throws XWikiException,
+        SocialAuthException
+    {
+        SocialAuthSession session = getSession();
+        if (session == null || session.getProfile() == null) {
+            throw new SocialAuthException("Illegal attempt at creating a user that is not associated");
+        }
+        return this.createUser(session.getProfile(), username, extraProperties);
+    }
+
+    @Override
     public SocialAuthSession getSession()
     {
         HttpSession httpSession = getRequest().getSession();
@@ -225,6 +212,76 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         return session;
     }
 
+    @Override
+    public DocumentReference getUser(String provider, String id)
+    {
+        // we need to make sure this happens in the main wiki if the configuration says so
+        // this is already done in connect() but getUser can also be called from the Authenticator
+        boolean isGlobalConfiguration = isGlobalConfiguration();
+        XWikiContext context = getContext();
+        String currentDatabase = context.getDatabase();
+        if (isGlobalConfiguration) {
+            context.setDatabase(getMainWikiName());
+        }
+
+        try {
+            String queryStatement =
+                "from doc.object(XWiki.XWikiUsers) as user, doc.object(XWiki.SocialLoginProfileClass)"
+                    + " as profile where profile.provider = :provider and profile.validatedId = :validated";
+
+            Query query = this.queryManager.createQuery(queryStatement, Query.XWQL);
+            query.bindValue("provider", provider);
+            query.bindValue("validated", id);
+
+            List<String> results = query.execute();
+
+            for (String reference : results) {
+                return getContext().getWiki().getDocument(reference, getContext()).getDocumentReference();
+            }
+            return null;
+        } catch (QueryException e) {
+            this.logger.error("Failed to query for user with provider [{}] and id [{}]", provider, id);
+            return null;
+        } catch (XWikiException e) {
+            this.logger.error("Failed to query for user with provider [{}] and id [{}]", provider, id);
+            return null;
+        } finally {
+            if (isGlobalConfiguration) {
+                context.setDatabase(currentDatabase);
+            }
+        }
+    }
+
+    @Override
+    public boolean hasProvider(DocumentReference user, String provider)
+    {
+        XWikiDocument userDocument;
+        try {
+            userDocument = getContext().getWiki().getDocument(user, getContext());
+            BaseObject object = userDocument.getObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", provider);
+            return object != null;
+        } catch (XWikiException e) {
+            this.logger
+                .error(MessageFormat.format("Failed to determine if user [{0}] has associated provider [{1}]", user,
+                    provider), e);
+            return false;
+        }
+
+    }
+
+    @Override
+    public boolean isConnected()
+    {
+        return isConnected(getSession());
+    }
+
+    @Override
+    public boolean isConnected(String provider)
+    {
+        return isConnected(getSession(), provider);
+    }
+
+    @Override
     public void requestConnection(String provider, String returnUrl) throws SocialAuthException
     {
         HttpSession httpSession = getRequest().getSession();
@@ -254,59 +311,14 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         }
     }
 
-    public DocumentReference createUser(Map<String, String> extraProperties) throws XWikiException, SocialAuthException
+    @Override
+    public boolean userExists(String provider, String id)
     {
-        SocialAuthSession session = getSession();
-        if (session == null || session.getProfile() == null) {
-            throw new SocialAuthException("Illegal attempt at creating a user that is not associated");
-        }
-        return this.createUser(this.computeUsername(session.getProfile()), extraProperties);
+        return getUser(provider, id) != null;
     }
 
-    public DocumentReference createUser(String username, Map<String, String> extraProperties) throws XWikiException,
-        SocialAuthException
-    {
-        SocialAuthSession session = getSession();
-        if (session == null || session.getProfile() == null) {
-            throw new SocialAuthException("Illegal attempt at creating a user that is not associated");
-        }
-        return this.createUser(session.getProfile(), username, extraProperties);
-    }
-
-    private DocumentReference createUser(Profile profile, String username) throws XWikiException, SocialAuthException
-    {
-        return this.createUser(profile, username, Collections.<String, String> emptyMap());
-    }
-
-    private DocumentReference createUser(Profile profile, String username, Map<String, String> extraProperties)
-        throws XWikiException, SocialAuthException
-    {
-        String userDocumentName = "XWiki." + username;
-
-        if (isGlobalConfiguration()) {
-            // we need to make sure we create the user globally if the configuration says so
-            userDocumentName = getMainWikiName() + ":" + userDocumentName;
-        }
-        XWikiContext context = getContext();
-
-        Map<String, String> properties = new HashMap<String, String>(extraProperties);
-        properties.put("active", "1");
-        properties.put("email", profile.getEmail());
-        properties.put("first_name", profile.getFirstName());
-        properties.put("last_name", profile.getLastName());
-        // We don't put the same password as the one of the social profile
-        properties.put("password", getContext().getWiki().generateRandomString(16));
-
-        context.getWiki().createUser(username, properties, context);
-
-        XWikiDocument userDoc = context.getWiki().getDocument(userDocumentName, context);
-
-        this.addSocialProfileToUser(profile, userDoc.getDocumentReference());
-
-        return userDoc.getDocumentReference();
-
-    }
-
+    // /////////////////////////////////////////////////////////////////////////////////////////////
+    
     private void addSocialProfileToUser(Profile profile, DocumentReference user) throws SocialAuthException
     {
         boolean isGlobalConfiguration = isGlobalConfiguration();
@@ -404,16 +416,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
             }
         }
     }
-
-    private void setPassword(String password)
-    {
-        try {
-            getSession().setEncryptedPassword(this.passwordCryptoService.encryptText(password, getEncryptionKey()));
-        } catch (GeneralSecurityException e) {
-            // Nothing
-        }
-    }
-
+    
     private String computeUsername(Profile profile)
     {
         // TODO let the format be defined in configuration
@@ -429,65 +432,54 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         return getContext().getWiki().getUniquePageName("XWiki", username, getContext());
     }
 
-    public boolean hasProvider(DocumentReference user, String provider)
+    private DocumentReference createUser(Profile profile, String username) throws XWikiException, SocialAuthException
     {
-        XWikiDocument userDocument;
-        try {
-            userDocument = getContext().getWiki().getDocument(user, getContext());
-            BaseObject object = userDocument.getObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", provider);
-            return object != null;
-        } catch (XWikiException e) {
-            this.logger
-                .error(MessageFormat.format("Failed to determine if user [{0}] has associated provider [{1}]", user,
-                    provider), e);
-            return false;
-        }
-
+        return this.createUser(profile, username, Collections.<String, String> emptyMap());
     }
 
-    public void associateAccount(String providerId) throws SocialAuthException
+    private DocumentReference createUser(Profile profile, String username, Map<String, String> extraProperties)
+        throws XWikiException, SocialAuthException
     {
+        String userDocumentName = "XWiki." + username;
+
+        if (isGlobalConfiguration()) {
+            // we need to make sure we create the user globally if the configuration says so
+            userDocumentName = getMainWikiName() + ":" + userDocumentName;
+        }
         XWikiContext context = getContext();
-        HttpServletRequest request = context.getRequest();
-        AuthProvider provider;
-        try {
-            if (StringUtils.isBlank(request.getParameter(CALLBACK_PARAMETER))) {
-                String url =
-                    request.getRequestURL() + "?" + request.getQueryString() + "&" + CALLBACK_PARAMETER + "=1&"
-                        + PROVIDER_PARAMETER + "=" + providerId;
 
-                this.requestConnection(providerId, url);
+        Map<String, String> properties = new HashMap<String, String>(extraProperties);
+        properties.put("active", "1");
+        properties.put("email", profile.getEmail());
+        properties.put("first_name", profile.getFirstName());
+        properties.put("last_name", profile.getLastName());
+        // We don't put the same password as the one of the social profile
+        properties.put("password", getContext().getWiki().generateRandomString(16));
 
-            } else {
-                SocialAuthSession session =
-                    (SocialAuthSession) request.getSession().getAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE);
+        context.getWiki().createUser(username, properties, context);
 
-                provider = session.getAuthManager().connect(SocialAuthUtil.getRequestParametersMap(request));
-                session.putAuthProvider(providerId, provider);
-                Profile profile = provider.getUserProfile();
+        XWikiDocument userDoc = context.getWiki().getDocument(userDocumentName, context);
 
-                if (getUser(providerId, profile.getValidatedId()) != null) {
-                    throw new SocialAuthException(
-                        "Refusing to associate account as it is already associated with a user on this wiki.");
-                }
+        this.addSocialProfileToUser(profile, userDoc.getDocumentReference());
 
-                this.addSocialProfileToUser(profile, getContext().getUserReference());
-            }
-        } catch (Exception e) {
-            throw new SocialAuthException("Failed to associate account", e);
-        }
+        return userDoc.getDocumentReference();
+
     }
-
-    // /////////////////////////////////////////////////////////////////////////////////////////////
-
+    
     private XWikiContext getContext()
     {
         return (XWikiContext) this.execution.getContext().getProperty("xwikicontext");
     }
-
-    private HttpServletResponse getResponse()
+    
+    private String getEncryptionKey()
     {
-        return getContext().getResponse();
+        String key = getContext().getWiki().Param("xwiki.authentication.encryptionKey");
+        return key;
+    }
+
+    private String getMainWikiName()
+    {
+        return valueProvider.getDefaultValue(EntityType.WIKI);
     }
 
     private HttpServletRequest getRequest()
@@ -495,6 +487,16 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         return getContext().getRequest();
     }
 
+    private HttpServletResponse getResponse()
+    {
+        return getContext().getResponse();
+    }
+
+    private boolean isGlobalConfiguration()
+    {
+        return "1".equals(getContext().getWiki().Param(GLOBAL_CONFIGURATION_KEY));
+    }
+    
     private SocialAuthConfig getSocialAuthConfig()
     {
         if (this.config == null) {
@@ -512,13 +514,22 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         return this.config;
     }
 
-    private String getMainWikiName()
+    private boolean isConnected(SocialAuthSession profile)
     {
-        return valueProvider.getDefaultValue(EntityType.WIKI);
+        return profile != null && this.isConnected(profile, profile.getCurrentProvider());
     }
 
-    public boolean isGlobalConfiguration()
+    private boolean isConnected(SocialAuthSession profile, String provider)
     {
-        return "1".equals(getContext().getWiki().Param(GLOBAL_CONFIGURATION_KEY));
+        return profile != null && profile.getProfile(provider) != null;
+    }
+
+    private void setPassword(String password)
+    {
+        try {
+            getSession().setEncryptedPassword(this.passwordCryptoService.encryptText(password, getEncryptionKey()));
+        } catch (GeneralSecurityException e) {
+            // Nothing
+        }
     }
 }
