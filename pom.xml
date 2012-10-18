@@ -26,6 +26,7 @@
   <modules>
     <module>xwiki-social-login-ui</module>
     <module>xwiki-social-login-api</module>
+    <module>xwiki-social-facebook-ui</module>
   </modules>
   <repositories>
     <!-- Needed for brickred SocialAuth -->

@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>XWiki</web>
+<name>XWikiUserFacebookSheet</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1350066061000</creationDate>
+<date>1350070547000</date>
+<contentUpdateDate>1350070547000</contentUpdateDate>
+<version>1.8</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>true</minorEdit>
+<syntaxId>xwiki/2.1</syntaxId>
+<hidden>false</hidden>
+<content>{{velocity}}
+#set($facebookProfile = $doc.getObject("XWiki.SocialLoginProfileClass", "provider", "facebook"))
+##
+#if($isMyProfile &amp;&amp; !$facebookProfile &amp;&amp; $request.xaction == 'associate')
+  ##
+  ## Associates a FB account with the current user profile. User will be sent to FB for authorizing the application and brought back here.
+  ##
+  #set($ok = $services.socialAuth.associateAccount("facebook"))
+  #if($ok)
+{{info}}
+Facebook account successfully associated
+{{/info}}
+  #else
+{{error}}
+Error while associating your Facebook account
+{{/error}}
+  #end
+#else
+
+#if(!$facebookProfile)
+{{warning}}
+Your profile is not associated with a Facebook account. [[Associate it now&gt;&gt;$doc.fullName||queryString="category=facebook&amp;xaction=associate"]]
+{{/warning}}
+#end
+#end
+{{/velocity}}</content></xwikidoc>

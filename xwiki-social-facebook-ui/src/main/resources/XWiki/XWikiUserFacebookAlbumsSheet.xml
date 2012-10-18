@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xwikidoc>
+<web>XWiki</web>
+<name>XWikiUserFacebookAlbumsSheet</name>
+<language></language>
+<defaultLanguage>en</defaultLanguage>
+<translation>0</translation>
+<parent></parent>
+<creator>XWiki.Admin</creator>
+<author>XWiki.Admin</author>
+<customClass></customClass>
+<contentAuthor>XWiki.Admin</contentAuthor>
+<creationDate>1350482412000</creationDate>
+<date>1350486708000</date>
+<contentUpdateDate>1350486708000</contentUpdateDate>
+<version>2.20</version>
+<title></title>
+<template></template>
+<defaultTemplate></defaultTemplate>
+<validationScript></validationScript>
+<comment></comment>
+<minorEdit>true</minorEdit>
+<syntaxId>xwiki/2.1</syntaxId>
+<hidden>false</hidden>
+<content> {{groovy}}
+import groovy.json.JsonSlurper
+
+def slurper = new JsonSlurper()
+
+def hasFacebook = services.socialAuth.hasProvider("facebook")
+def isConnected = services.socialAuth.isConnected("facebook")
+
+if (hasFacebook &amp;&amp; !isConnected) {
+  // TODO
+  // services.socialAuth.ensureConnected("facebook")
+}
+
+def accessToken =  isConnected ? services.socialAuth.getToken("facebook") : null
+
+def albums = doc.getObjects("XWiki.FacebookAlbumClass").collect { album -&gt;
+  def url = album.get("url")?.trim()
+  url = url.substring(url.indexOf("?set=a.") + 7)
+  url = url?.substring(0, url.indexOf("."))
+  url
+}
+.findAll {
+  it != null &amp;&amp; it.trim() != ""
+}
+
+println "== Albums =="
+
+for (id in albums) {
+
+  def albumURL = "https://graph.facebook.com/" + id 
+  def photosURL = albumURL + "/photos"
+  if (accessToken) {
+    albumURL += "?&amp;access_token=" + accessToken 
+    photosURL += "?&amp;access_token=" + accessToken 
+  }
+  albumURL = albumURL.toURL()
+  photosURL = photosURL.toURL()
+
+  connection = albumURL.openConnection()
+  if (connection.responseCode == 200) {
+    def name = slurper.parseText(albumURL.text).name
+    // Assume response is going to be OK since album was OK
+    def data = slurper.parseText(photosURL.text).data
+    if (data.size() &gt; 0) {
+      println """== ${name} == """
+      println """\n{{gallery}}\n"""
+      for (picture in data) {
+        println "image:${picture.source}"
+      }
+      println """\n{{/gallery}}\n"""
+    }
+  }
+  else {
+   // TODO display nice error message according to response code.
+   // (or not: for 400, it simply means the user is not allowed to view this album)
+   // println connection.responseCode
+  }
+}
+{{/groovy}}</content></xwikidoc>
