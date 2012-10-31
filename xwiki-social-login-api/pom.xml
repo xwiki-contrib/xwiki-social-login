@@ -8,7 +8,7 @@
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>xwiki-social-login-api</artifactId>
   <packaging>jar</packaging>
-  <name>XWiki Contrib - Social Login - API</name>
+  <name>Social Login Module</name>
   <description>Java and script service API for the social login module</description>
   <dependencies>
     <dependency>
