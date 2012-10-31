@@ -9,13 +9,13 @@
   <artifactId>xwiki-social-login-ui</artifactId>
   <packaging>xar</packaging>
   <name>XWiki Contrib - Social Login - UI</name>
-  <description>UI (wiki pages) for the social login module</description>
+  <description>Login to XWiki from various social sites (Facebook, Twitter, Foursquare, etc.) and interact with them (status, posts, etc.)</description>
   <dependencies>
     <dependency>
       <groupId>org.xwiki.contrib</groupId>
       <artifactId>xwiki-social-login-api</artifactId>
       <version>${project.version}</version>
-      <scope>provided</scope>
+      <scope>runtime</scope>
     </dependency>
   </dependencies>
 </project>

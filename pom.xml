@@ -23,6 +23,14 @@
       <url>http://nexus.xwiki.org/nexus/service/local/staging/deploy/maven2</url>
     </repository>
   </distributionManagement>
+  <developers>
+    <developer>
+      <id>jvelo</id>
+      <name>Jerome Velociter</name>
+      <email>jerome@velociter.fr</email>
+      <url>http://velociter.fr</url>
+    </developer>
+  </developers>
   <modules>
     <module>xwiki-social-login-ui</module>
     <module>xwiki-social-login-api</module>
