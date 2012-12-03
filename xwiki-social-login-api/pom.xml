@@ -19,19 +19,19 @@
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-oldcore</artifactId>
-      <version>4.0</version>
+      <version>3.5.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-container-api</artifactId>
-      <version>4.0</version>
+      <version>3.5.1</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-crypto</artifactId>
-      <version>4.0</version>
+      <version>3.5.1</version>
       <scope>provided</scope>
     </dependency>
   </dependencies>

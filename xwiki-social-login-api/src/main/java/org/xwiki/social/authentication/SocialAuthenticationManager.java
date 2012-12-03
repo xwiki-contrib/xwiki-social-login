@@ -2,7 +2,7 @@ package org.xwiki.social.authentication;
 
 import java.util.Map;
 
-import org.xwiki.component.annotation.Role;
+import org.xwiki.component.annotation.ComponentRole;
 import org.xwiki.model.reference.DocumentReference;
 
 import com.xpn.xwiki.XWikiException;
@@ -11,7 +11,7 @@ import com.xpn.xwiki.XWikiException;
  * Orchestrator of all things social authentication, it provides facilities to establish connections between XWiki users
  * and third party OAuth end-points, and to query both persistent and session status of such connections.
  */
-@Role
+@ComponentRole
 public interface SocialAuthenticationManager
 {
     /**
