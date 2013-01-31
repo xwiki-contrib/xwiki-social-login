@@ -18,6 +18,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.lang3.StringUtils;
 import org.brickred.socialauth.AuthProvider;
+import org.brickred.socialauth.Permission;
 import org.brickred.socialauth.Profile;
 import org.brickred.socialauth.SocialAuthConfig;
 import org.brickred.socialauth.SocialAuthManager;
@@ -320,7 +321,15 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
             SocialAuthSession session = new SocialAuthSession(manager);
             httpSession.setAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE, session);
 
-            String url = manager.getAuthenticationUrl(provider, returnUrl);
+            Permission urlPermission = null;
+            // Check for custom permissions in the OAuth config file
+            String customPermissions = (String) this.getSocialAuthConfig().getApplicationProperties().get("graph.facebook.com.custom_permission");
+            if(!StringUtils.isBlank(customPermissions)) {
+            	logger.debug("Using custom permissions for scope:" + customPermissions);
+            	manager.getSocialAuthConfig().getProviderConfig(provider).setCustomPermissions(customPermissions);
+            	urlPermission = Permission.CUSTOM;
+            } 
+            String url = manager.getAuthenticationUrl(provider, returnUrl, urlPermission);
 
             logger.debug("Redirecting to OAuth endpoint URL : " + url);
 
