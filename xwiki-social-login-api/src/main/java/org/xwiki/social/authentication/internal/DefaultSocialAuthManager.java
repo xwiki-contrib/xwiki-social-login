@@ -238,6 +238,13 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
     }
 
     @Override
+    public void removeSession()
+    {
+        HttpSession httpSession = getRequest().getSession();
+        httpSession.removeAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE);
+    }
+
+    @Override
     public DocumentReference getUser(String provider, String id)
     {
         // we need to make sure this happens in the main wiki if the configuration says so
