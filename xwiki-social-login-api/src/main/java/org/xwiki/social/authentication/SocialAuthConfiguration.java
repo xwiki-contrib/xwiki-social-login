@@ -21,9 +21,9 @@ package org.xwiki.social.authentication;
 
 import java.util.List;
 
-import org.xwiki.component.annotation.Role;
+import org.xwiki.component.annotation.ComponentRole;
 
-@Role
+@ComponentRole
 public interface SocialAuthConfiguration
 {
     List<String> getAvailableProviders();
