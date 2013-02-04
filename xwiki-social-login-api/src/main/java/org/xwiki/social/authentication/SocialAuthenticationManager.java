@@ -48,6 +48,11 @@ public interface SocialAuthenticationManager
     SocialAuthSession getSession();
 
     /**
+     * Remove {@link SocialAuthSession} from the session.
+     */
+    void removeSession();
+
+    /**
      * @return <code>true</code> if the context user has a social session with any provider successfully connected,
      *         <code>false</code> otherwise.
      */
