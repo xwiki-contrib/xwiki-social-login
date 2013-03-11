@@ -12,9 +12,9 @@
   <version>2.0-SNAPSHOT</version>
   <description>Login from various social sites to your XWiki (Facebook, Twitter, Foursquare, etc.). Based on socialauth</description>
   <scm>
-    <connection>scm:git:git://github.com/jvelo/xwiki-social-login.git</connection>
-    <developerConnection>scm:git:git@github.com:jvelo/xwiki-social-login.git</developerConnection>
-    <url>https://jvelo@github.com/jvelo/xwiki-social-login.git</url>
+    <connection>scm:git:git@github.com:xwiki-contrib/xwiki-social-login.git</connection>
+    <developerConnection>scm:git:git@github.com:xwiki-contrib/xwiki-social-login.git</developerConnection>
+    <url>https://github.com/xwiki-contrib/xwiki-social-login.git</url>
   </scm>
   <distributionManagement>
     <repository>
