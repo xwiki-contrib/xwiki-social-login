@@ -491,7 +491,9 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
         Map<String, String> properties = new HashMap<String, String>(extraProperties);
         properties.put("active", "1");
-        properties.put("email", profile.getEmail());
+        if(StringUtils.isBlank(properties.get("email"))) {
+          properties.put("email", profile.getEmail());
+        }
         properties.put("first_name", profile.getFirstName());
         properties.put("last_name", profile.getLastName());
         // We don't put the same password as the one of the social profile
