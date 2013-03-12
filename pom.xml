@@ -50,9 +50,9 @@
     </extensions>
   </build>
   <scm>
-    <connection>scm:git:git://github.com/jvelo/xwiki-social-login.git</connection>
-    <developerConnection>scm:git:git@github.com:jvelo/xwiki-social-login.git</developerConnection>
-    <url>https://jvelo@github.com/jvelo/xwiki-social-login.git</url>
+    <connection>scm:git:git@github.com:xwiki-contrib/xwiki-social-login.git</connection>
+    <developerConnection>scm:git:git@github.com:xwiki-contrib/xwiki-social-login.git</developerConnection>
+    <url>https://github.com/xwiki-contrib/xwiki-social-login.git</url>
   </scm>
   <distributionManagement>
     <repository>
