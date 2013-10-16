@@ -19,6 +19,8 @@
  */
 package org.xwiki.social.authentication.internal;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.security.Principal;
 
@@ -184,11 +186,23 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
             String url =
                 request.getRequestURL() + "?" + CALLBACK_PARAMETER + "=1&" + PROVIDER_PARAMETER + "=" + provider;
 
+            
             // FIXME Right now the xredirect parameter is lost because we don't pass the full query string
             // in the redirect_uri.
             // There is an issue with some special characters in the redirect_uri that will make Facebook
             // not validate the request.
             // See http://stackoverflow.com/questions/4386691/facebook-error-error-validating-verification-code
+            
+            //in case the provider is not Facebook, keep the xredirect parameter
+            String redirect = context.getRequest().getParameter("xredirect");
+            if (redirect != null && provider != null && !provider.toLowerCase().equals("facebook")) {
+               try {
+                   url = url + "&xredirect=" + URLEncoder.encode(redirect, "UTF-8");
+               } catch (UnsupportedEncodingException e) {
+                    throw new SocialAuthException("Bad URL encoding", e);
+               }
+            }
+
 
             manager.requestConnection(provider, url);
         } else {
