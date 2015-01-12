@@ -46,7 +46,6 @@
       <groupId>org.xwiki.platform</groupId>
       <artifactId>xwiki-platform-oldcore</artifactId>
       <version>${platform.version}</version>
-      <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -63,11 +62,6 @@
     <dependency>
        <groupId>javax.servlet</groupId>
        <artifactId>servlet-api</artifactId>
-       <!-- Note: The 2.4 version is not technically correct as 2.4 corresponds to a specification
-             # and is not an implementation version. The central repo would need to be fixed... -->
-       <version>2.4</version>
-       <!-- It should always be provided, otherwise containers will complain about it. -->
-       <scope>provided</scope>
      </dependency>
   </dependencies>
 </project>

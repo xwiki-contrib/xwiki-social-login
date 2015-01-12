@@ -19,6 +19,13 @@
  */
 package org.xwiki.social.authentication.internal;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Properties;
+import java.util.Set;
+
 import javax.inject.Inject;
 import javax.inject.Named;
 
@@ -26,10 +33,9 @@ import org.xwiki.component.annotation.Component;
 import org.xwiki.component.phase.Initializable;
 import org.xwiki.component.phase.InitializationException;
 import org.xwiki.configuration.ConfigurationSource;
-import org.xwiki.configuration.internal.CompositeConfigurationSource;
 
 @Component("socialAuth")
-public class SocialAuthConfigurationSource extends CompositeConfigurationSource implements Initializable
+public class SocialAuthConfigurationSource implements ConfigurationSource, Initializable
 {
     @Inject
     @Named("socialAuthDocument")
@@ -39,10 +45,133 @@ public class SocialAuthConfigurationSource extends CompositeConfigurationSource 
     @Named("xwikiproperties")
     private ConfigurationSource xwikiPropertiesSource;
 
+    /**
+     * The order of sources is important. Sources located before other sources take priority.
+     */
+    private List<ConfigurationSource> sources = new ArrayList<ConfigurationSource>();
+
+    @Override
     public void initialize() throws InitializationException
     {
         // First source is searched first when a property value is requested.
-        this.addConfigurationSource(socialAuthDocumentSource);
-        this.addConfigurationSource(xwikiPropertiesSource);
+        this.sources.add(socialAuthDocumentSource);
+        this.sources.add(xwikiPropertiesSource);
+    }
+
+    @Override
+    public boolean containsKey(String key)
+    {
+        boolean result = false;
+
+        for (ConfigurationSource source : this.sources) {
+            if (source.containsKey(key)) {
+                result = true;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public <T> T getProperty(String key)
+    {
+        T result = null;
+
+        for (ConfigurationSource source : this.sources) {
+            if (source.containsKey(key)) {
+                result = source.<T>getProperty(key);
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    @Override
+    public <T> T getProperty(String key, Class<T> valueClass)
+    {
+        T result = null;
+
+        for (ConfigurationSource source : this.sources) {
+            if (source.containsKey(key)) {
+                result = source.getProperty(key, valueClass);
+                break;
+            }
+        }
+
+        // List and Properties must return empty collections and not null values.
+        if (result == null) {
+            result = getDefault(valueClass);
+        }
+
+        return result;
+    }
+
+    @Override
+    public <T> T getProperty(String key, T defaultValue)
+    {
+        T result = null;
+
+        for (ConfigurationSource source : this.sources) {
+            if (source.containsKey(key)) {
+                result = source.<T>getProperty(key, defaultValue);
+                break;
+            }
+        }
+
+        if (result == null) {
+            result = defaultValue;
+        }
+
+        return result;
+    }
+
+    @Override
+    public List<String> getKeys()
+    {
+        // We use a linked hash set in order to keep the keys in the order in which they were defined in the sources.
+        Set<String> keys = new LinkedHashSet<String>();
+
+        for (ConfigurationSource source : this.sources) {
+            keys.addAll(source.getKeys());
+        }
+
+        return new ArrayList<String>(keys);
+    }
+
+    @Override
+    public boolean isEmpty()
+    {
+        boolean result = true;
+
+        for (ConfigurationSource source : this.sources) {
+            if (!source.isEmpty()) {
+                result = false;
+                break;
+            }
+        }
+
+        return result;
+    }
+
+    /**
+     * @param valueClass the class of the property
+     * @param <T> the type of the property
+     * @return the default value of a property for the provided class
+     */
+    private <T> T getDefault(Class<T> valueClass)
+    {
+        T result = null;
+
+        if (valueClass != null) {
+            if (List.class.getName().equals(valueClass.getName())) {
+                result = (T) Collections.emptyList();
+            } else if (Properties.class.getName().equals(valueClass.getName())) {
+                result = (T) new Properties();
+            }
+        }
+
+        return result;
     }
 }
