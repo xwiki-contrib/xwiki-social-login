@@ -31,8 +31,8 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>xwiki-social-login-api</artifactId>
   <packaging>jar</packaging>
-  <name>Social Login Module</name>
-  <description>Java and script service API for the social login module</description>
+  <name>Social Login API</name>
+  <description>Java and Script APIs for the Social Login Application</description>
   <properties>
     <xwiki.checkstyle.skip>true</xwiki.checkstyle.skip>
   </properties>
