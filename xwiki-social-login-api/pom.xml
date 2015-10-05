@@ -40,7 +40,13 @@
     <dependency>
       <groupId>org.brickred</groupId>
       <artifactId>socialauth</artifactId>
-      <version>4.7</version>
+      <version>4.9-xwiki</version>
+      <exclusions>
+        <exclusion>
+          <artifactId>commons-logging</artifactId>
+          <groupId>commons-logging</groupId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>org.xwiki.platform</groupId>
@@ -60,8 +66,8 @@
       <scope>provided</scope>
     </dependency>
     <dependency>
-       <groupId>javax.servlet</groupId>
-       <artifactId>servlet-api</artifactId>
-     </dependency>
+      <groupId>javax.servlet</groupId>
+      <artifactId>servlet-api</artifactId>
+    </dependency>
   </dependencies>
 </project>
