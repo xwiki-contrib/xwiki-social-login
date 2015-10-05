@@ -135,6 +135,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         }
     }
 
+    @Override
     public void ensureConnected(String providerId) throws SocialAuthException
     {
         XWikiContext context = getContext();

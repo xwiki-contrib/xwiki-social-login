@@ -25,7 +25,7 @@ import org.xwiki.social.authentication.ProfilePictureProviderTransformer;
 @Component("facebook")
 public class FacebookProfilePictureProviderTransformer implements ProfilePictureProviderTransformer
 {
-
+    @Override
     public String transform(String url)
     {
         return url + "?type=large";

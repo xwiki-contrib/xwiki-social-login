@@ -45,11 +45,13 @@ public class DefaultSocialAuthConfiguration implements SocialAuthConfiguration
     @Named("socialAuth")
     private ConfigurationSource configuration;
 
+    @Override
     public List<String> getAvailableProviders()
     {
         return Arrays.asList(this.configuration.getProperty(PREFIX + "availableProviders", "").split("[,\n]"));
     }
 
+    @Override
     public boolean getLoginButtonsEnabled()
     {
         Object value = this.configuration.getProperty(PREFIX + "loginButtonsEnabled", "1");
@@ -66,6 +68,7 @@ public class DefaultSocialAuthConfiguration implements SocialAuthConfiguration
         }
     }
 
+    @Override
     public boolean isAutomaticUserCreation()
     {
         Object value = this.configuration.getProperty(PREFIX + "automaticUserCreation", "1");
@@ -82,6 +85,7 @@ public class DefaultSocialAuthConfiguration implements SocialAuthConfiguration
         }
     }
 
+    @Override
     public String getDomainRestriction()
     {
         return this.configuration.getProperty(PREFIX + "domainRestriction", "");
