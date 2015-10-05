@@ -4,3 +4,9 @@ org.xwiki.social.authentication.internal.SocialAuthConfigurationSource
 org.xwiki.social.authentication.internal.DefaultSocialAuthManager
 org.xwiki.social.authentication.internal.SocialAuthScriptService
 org.xwiki.social.authentication.internal.FacebookProfilePictureProviderTransformer
+
+org.xwiki.social.legacy.crypto.internal.DefaultUserDocumentUtils
+org.xwiki.social.legacy.crypto.internal.scripting.CryptoScriptService
+org.xwiki.social.legacy.crypto.passwd.internal.DefaultPasswordCryptoService
+org.xwiki.social.legacy.crypto.passwd.internal.DefaultPasswordCryptoServiceConfiguration
+org.xwiki.social.legacy.crypto.x509.internal.DefaultX509CryptoService

@@ -45,7 +45,6 @@ import org.brickred.socialauth.util.SocialAuthUtil;
 import org.slf4j.Logger;
 import org.xwiki.component.annotation.Component;
 import org.xwiki.context.Execution;
-import org.xwiki.crypto.passwd.PasswordCryptoService;
 import org.xwiki.environment.Environment;
 import org.xwiki.model.EntityType;
 import org.xwiki.model.reference.DocumentReference;
@@ -59,6 +58,7 @@ import org.xwiki.social.authentication.SocialAuthConstants;
 import org.xwiki.social.authentication.SocialAuthException;
 import org.xwiki.social.authentication.SocialAuthSession;
 import org.xwiki.social.authentication.SocialAuthenticationManager;
+import org.xwiki.social.legacy.crypto.passwd.PasswordCryptoService;
 
 import com.xpn.xwiki.XWikiContext;
 import com.xpn.xwiki.XWikiException;
