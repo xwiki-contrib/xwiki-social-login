@@ -343,7 +343,13 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
             Permission urlPermission = null;
             // Check for custom permissions in the OAuth config file
-            String customPermissions = (String) this.getSocialAuthConfig().getApplicationProperties().get("graph.facebook.com.custom_permission");
+            String customPermissions = "";
+            for (Object entry : this.getSocialAuthConfig().getApplicationProperties().keySet()) {
+                String cKey = (String) entry;
+                if (cKey.contains(provider) && cKey.contains("custom_permission")) {
+                    customPermissions = (String) this.getSocialAuthConfig().getApplicationProperties().get(cKey);
+                }
+            }
             if(!StringUtils.isBlank(customPermissions)) {
             	logger.debug("Using custom permissions for scope:" + customPermissions);
             	manager.getSocialAuthConfig().getProviderConfig(provider).setCustomPermissions(customPermissions);
