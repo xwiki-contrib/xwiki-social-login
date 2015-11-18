@@ -343,11 +343,12 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
             Permission urlPermission = null;
             // Check for custom permissions in the OAuth config file
-            String customPermissions = "";
+            String customPermissions = null;
             for (Object entry : this.getSocialAuthConfig().getApplicationProperties().keySet()) {
                 String cKey = (String) entry;
                 if (cKey.contains(provider) && cKey.contains("custom_permission")) {
                     customPermissions = (String) this.getSocialAuthConfig().getApplicationProperties().get(cKey);
+                    break;
                 }
             }
             if(!StringUtils.isBlank(customPermissions)) {
