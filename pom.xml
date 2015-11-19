@@ -36,7 +36,7 @@
   <version>2.4-SNAPSHOT</version>
   <description>Login from various social sites to your XWiki (Facebook, Twitter, Foursquare, etc.). Based on socialauth</description>
   <properties>
-    <xwiki.clirr.previous.version>1.0</xwiki.clirr.previous.version>
+    <xwiki.clirr.previous.version>3.5.1</xwiki.clirr.previous.version>
 	<xwiki.version>4.0</xwiki.version>
 	<!-- Name to display by the Extension Manager -->
 	<xwiki.extension.name>Social Login Application</xwiki.extension.name>
