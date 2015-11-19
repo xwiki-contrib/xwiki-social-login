@@ -32,7 +32,7 @@
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>xwiki-social-facebook-ui</artifactId>
   <packaging>xar</packaging>
-  <name>XWiki Contrib - Social - Facebook - UI</name>
+  <name>Social Facebook UI</name>
   <description>Facebook specific UI (groups, photo album, etc.)</description>
   <properties>
     <xar.verify.skip>true</xar.verify.skip>

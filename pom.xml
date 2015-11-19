@@ -32,11 +32,16 @@
   <groupId>org.xwiki.contrib</groupId>
   <artifactId>xwiki-social-login</artifactId>
   <packaging>pom</packaging>
-  <name>XWiki Contrib - Social Login</name>
+  <name>Social Login Application</name>
   <version>2.4-SNAPSHOT</version>
   <description>Login from various social sites to your XWiki (Facebook, Twitter, Foursquare, etc.). Based on socialauth</description>
   <properties>
     <xwiki.clirr.previous.version>1.0</xwiki.clirr.previous.version>
+	<xwiki.version>4.0</xwiki.version>
+	<!-- Name to display by the Extension Manager -->
+	<xwiki.extension.name>Social Login Application</xwiki.extension.name>
+	<!-- The extension's category -->
+	<xwiki.extension.category>application</xwiki.extension.category>
   </properties>
   <build>
     <extensions>
@@ -79,6 +84,11 @@
       <email>jerome@velociter.fr</email>
       <url>http://velociter.fr</url>
     </developer>
+	<developer>
+		<id>DjeblounSidali</id>
+		<name>Sidali Djebloun</name>
+		<email>dj.sidali@gmail.com</email>
+	</developer>
   </developers>
   <modules>
     <module>xwiki-social-login-ui</module>

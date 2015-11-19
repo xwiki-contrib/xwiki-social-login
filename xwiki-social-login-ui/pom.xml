@@ -31,8 +31,8 @@
   <modelVersion>4.0.0</modelVersion>
   <artifactId>xwiki-social-login-ui</artifactId>
   <packaging>xar</packaging>
-  <name>Social Login Application</name>
-  <description>Login to XWiki from various social sites (Facebook, Twitter, Foursquare, etc.) and interact with them (status, posts, etc.)</description>
+  <name>Social Login UI</name>
+  <description>UI for social login application</description>
   <properties>
     <xar.verify.skip>true</xar.verify.skip>
   </properties>
