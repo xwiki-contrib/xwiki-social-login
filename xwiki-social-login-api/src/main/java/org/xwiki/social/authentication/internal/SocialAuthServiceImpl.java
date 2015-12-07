@@ -179,7 +179,8 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
         throws SocialAuthException, XWikiException
     {
         HttpServletRequest request = context.getRequest();
-        if (StringUtils.isBlank(request.getParameter(CALLBACK_PARAMETER)) && manager.getSession() == null) {
+        boolean validSession = manager.getSession() != null && manager.getSession().getProfile() != null;
+        if (StringUtils.isBlank(request.getParameter(CALLBACK_PARAMETER)) && !validSession) {
             // Step 1.
             // Redirect the request towards the target OAuth endpoint
 
