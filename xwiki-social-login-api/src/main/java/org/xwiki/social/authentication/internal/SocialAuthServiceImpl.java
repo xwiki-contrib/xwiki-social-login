@@ -24,6 +24,7 @@ import java.net.URLEncoder;
 import java.security.GeneralSecurityException;
 import java.security.Principal;
 
+import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.lang3.StringUtils;
@@ -44,7 +45,6 @@ import com.xpn.xwiki.XWikiException;
 import com.xpn.xwiki.doc.XWikiDocument;
 import com.xpn.xwiki.objects.BaseObject;
 import com.xpn.xwiki.user.impl.xwiki.XWikiAuthServiceImpl;
-import com.xpn.xwiki.web.Utils;
 
 /**
  * <p>
@@ -109,14 +109,18 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
      */
     private static final Logger LOGGER = LoggerFactory.getLogger(SocialAuthServiceImpl.class);
 
+    @Inject
+    private SocialAuthenticationManager manager;
+    
+    @Inject
+    private PasswordCryptoService passwordCryptoService;
+    
     @Override
     public Principal authenticate(String login, String password, XWikiContext context) throws XWikiException
     {
         LOGGER.debug("Social login authenticate...");
 
         HttpServletRequest request = context.getRequest();
-
-        SocialAuthenticationManager manager = Utils.getComponent(SocialAuthenticationManager.class);
 
         if (StringUtils.isBlank(request.getParameter(PROVIDER_PARAMETER)) && !manager.isConnected()) {
             // Passing along to XWiki authentication
@@ -218,7 +222,7 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
             
             if (user != null) {
                 XWikiDocument document = context.getWiki().getDocument(user, context);
-                BaseObject profileObject = document.getObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", provider);
+                BaseObject profileObject = document.getXObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", provider);
                 String passwd = profileObject.getStringValue("password");
 
                 // We have just associated a social profile with the user session, which contains an encrypted password.
@@ -248,7 +252,7 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
         SocialAuthenticationManager manager, XWikiContext context) throws GeneralSecurityException, XWikiException
     {
         LOGGER.debug("Found a social profile in session");
-        PasswordCryptoService passwordCryptoService = Utils.getComponent(PasswordCryptoService.class);
+
         String key = context.getWiki().Param("xwiki.authentication.encryptionKey");
 
         DocumentReference user =

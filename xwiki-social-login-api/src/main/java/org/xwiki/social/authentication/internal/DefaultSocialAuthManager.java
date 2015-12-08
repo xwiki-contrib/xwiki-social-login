@@ -211,7 +211,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
                 XWikiDocument userDocument = getContext().getWiki().getDocument(user, getContext());
                 BaseObject object =
-                    userDocument.getObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", profile.getProviderId());
+                    userDocument.getXObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", profile.getProviderId());
                 String password = object.getStringValue("password");
                 this.setPassword(password);
 
@@ -303,7 +303,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
         XWikiDocument userDocument;
         try {
             userDocument = getContext().getWiki().getDocument(user, getContext());
-            BaseObject object = userDocument.getObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", provider);
+            BaseObject object = userDocument.getXObject(SOCIAL_LOGIN_PROFILE_CLASS, "provider", provider);
             return object != null;
         } catch (XWikiException e) {
             this.logger
@@ -395,8 +395,8 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
             String generatedPassword = getContext().getWiki().generateRandomString(16);
 
-            BaseObject socialProfile = userDoc.getObject(SOCIAL_LOGIN_PROFILE_CLASS, true, context);
-            BaseObject userObject = userDoc.getObject("XWiki.XWikiUsers", false, context);
+            BaseObject socialProfile = userDoc.getXObject(SOCIAL_LOGIN_PROFILE_CLASS, true, context);
+            BaseObject userObject = userDoc.getXObject(XWIKI_USER_CLASS_REF, false, context);
 
             if (userObject == null) {
                 throw new SocialAuthException("Cannot associate a social profile to a non-user page");
