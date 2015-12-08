@@ -21,7 +21,7 @@ package org.xwiki.social.legacy.crypto.passwd;
 
 import java.security.GeneralSecurityException;
 
-import org.xwiki.component.annotation.ComponentRole;
+import org.xwiki.component.annotation.Role;
 
 /**
  * Service allowing users to encrypt and decrypt text using a password.
@@ -29,7 +29,7 @@ import org.xwiki.component.annotation.ComponentRole;
  * @version $Id: 6cfcd5881b8de9515c5b14fed253943687a57b68 $
  * @since 2.5M1
  */
-@ComponentRole
+@Role
 public interface PasswordCryptoService
 {
     /**

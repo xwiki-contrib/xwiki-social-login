@@ -25,7 +25,6 @@ import java.security.GeneralSecurityException;
 import java.security.Principal;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.apache.commons.lang3.StringUtils;
 import org.brickred.socialauth.util.SocialAuthUtil;
@@ -116,10 +115,8 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
         LOGGER.debug("Social login authenticate...");
 
         HttpServletRequest request = context.getRequest();
-        HttpSession httpSession = request.getSession();
-        SocialAuthenticationManager manager = Utils.getComponent(SocialAuthenticationManager.class);
 
-        
+        SocialAuthenticationManager manager = Utils.getComponent(SocialAuthenticationManager.class);
 
         if (StringUtils.isBlank(request.getParameter(PROVIDER_PARAMETER)) && !manager.isConnected()) {
             // Passing along to XWiki authentication

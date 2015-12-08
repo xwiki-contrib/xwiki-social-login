@@ -196,7 +196,6 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
                 // FIXME use a random in a singleton instead, as somebody could use the persistent cookie to forge the
                 // encrypted password
-                String key = getEncryptionKey();
                 session.putAuthProvider(profile.getProviderId(), provider);
                 session.setCurrentProvider(profile.getProviderId());
 
