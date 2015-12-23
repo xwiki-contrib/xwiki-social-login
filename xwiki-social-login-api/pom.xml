@@ -40,7 +40,7 @@
     <dependency>
       <groupId>org.brickred</groupId>
       <artifactId>socialauth</artifactId>
-      <version>4.9-xwiki</version>
+      <version>4.10</version>
       <exclusions>
         <exclusion>
           <artifactId>commons-logging</artifactId>
