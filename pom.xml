@@ -67,7 +67,7 @@
   <scm>
     <connection>scm:git:git@github.com:xwiki-contrib/xwiki-social-login.git</connection>
     <developerConnection>scm:git:git@github.com:xwiki-contrib/xwiki-social-login.git</developerConnection>
-    <url>https://github.com/xwiki-contrib/xwiki-social-login.git</url>
+    <url>https://github.com/xwiki-contrib/xwiki-social-login/tree/master</url>
     <tag>HEAD</tag>
   </scm>
   <distributionManagement>
