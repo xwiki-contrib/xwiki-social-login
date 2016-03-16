@@ -1,28 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<xwikidoc>
+<xwikidoc version="1.1">
   <web>XWiki</web>
   <name>SocialLoginConfigurationClass</name>
   <language/>
   <defaultLanguage/>
   <translation>0</translation>
-  <parent/>
   <creator>xwiki:XWiki.Admin</creator>
+  <creationDate>1458026958000</creationDate>
   <author>xwiki:XWiki.Admin</author>
-  <customClass/>
   <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-  <creationDate>1306600494000</creationDate>
-  <date>1350125631000</date>
-  <contentUpdateDate>1350125631000</contentUpdateDate>
+  <date>1458053709000</date>
+  <contentUpdateDate>1458053709000</contentUpdateDate>
   <version>1.1</version>
   <title>XClass representing social login configuration</title>
-  <template/>
-  <defaultTemplate/>
-  <validationScript/>
   <comment/>
   <minorEdit>false</minorEdit>
   <syntaxId>xwiki/2.0</syntaxId>
   <hidden>false</hidden>
+  <content/>
   <class>
     <name>XWiki.SocialLoginConfigurationClass</name>
     <customClass/>
@@ -32,6 +28,20 @@
     <defaultWeb/>
     <nameField/>
     <validationScript/>
+    <automaticUserCreation>
+      <customDisplay/>
+      <defaultValue/>
+      <disabled>0</disabled>
+      <displayFormType>select</displayFormType>
+      <displayType/>
+      <name>automaticUserCreation</name>
+      <number>3</number>
+      <prettyName>Automatic user creation</prettyName>
+      <unmodifiable>0</unmodifiable>
+      <validationMessage/>
+      <validationRegExp/>
+      <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+    </automaticUserCreation>
     <availableProviders>
       <customDisplay/>
       <disabled>0</disabled>
@@ -62,5 +72,4 @@
       <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
     </loginButtonsEnabled>
   </class>
-  <content/>
 </xwikidoc>
