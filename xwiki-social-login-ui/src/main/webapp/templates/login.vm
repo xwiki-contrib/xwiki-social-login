@@ -39,7 +39,7 @@
   #end
   #if($services.socialAuth.sessionProfile)
     <div class="box warningmessage">
-      #set($provider = "services.socialAuth.sessionProfile.getProviderId()")
+      #set($provider = "$services.socialAuth.sessionProfile.getProviderId()")
       #set($link = $xwiki.getURL('XWiki.SocialLoginRegister'))
 	  <a href="${link}" title="$msg.get('xwiki.socialLogin.registrationAlreadyStarted', [$provider])">$msg.get('xwiki.socialLogin.registrationAlreadyStarted', [$provider])</a>
     </div>
