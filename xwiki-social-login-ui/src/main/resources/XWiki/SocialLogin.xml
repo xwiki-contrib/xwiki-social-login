@@ -1,33 +1,36 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <xwikidoc>
-<web>XWiki</web>
-<name>SocialLogin</name>
-<language></language>
-<defaultLanguage>fr</defaultLanguage>
-<translation>0</translation>
-<parent>XWiki.WebHome</parent>
-<creator>xwiki:XWiki.Admin</creator>
-<author>xwiki:XWiki.Admin</author>
-<customClass></customClass>
-<contentAuthor>xwiki:XWiki.Admin</contentAuthor>
-<creationDate>1306580153000</creationDate>
-<date>1339452590000</date>
-<contentUpdateDate>1339452590000</contentUpdateDate>
-<version>1.1</version>
-<title>Social authentication</title>
-<template></template>
-<defaultTemplate></defaultTemplate>
-<validationScript></validationScript>
-<comment></comment>
-<minorEdit>false</minorEdit>
-<syntaxId>xwiki/2.0</syntaxId>
-<hidden>false</hidden><attachment>
-<filename>socialauth-2.2.jar</filename>
-<filesize>139396</filesize>
-<author>xwiki:XWiki.jvelo</author>
-<date>1339449333000</date>
-<version>1.1</version>
-<comment></comment><content>UEsDBAoAAAAAAKGrQkAAAAAAAAAAAAAAAAAJAAAATUVUQS1JTkYvUEsDBAoAAAAIAKCrQkBWPw9u
+  <web>XWiki</web>
+  <name>SocialLogin</name>
+  <language/>
+  <defaultLanguage/>
+  <translation>0</translation>
+  <parent>XWiki.WebHome</parent>
+  <creator>xwiki:XWiki.Admin</creator>
+  <author>xwiki:XWiki.Admin</author>
+  <customClass/>
+  <contentAuthor>xwiki:XWiki.Admin</contentAuthor>
+  <creationDate>1306580153000</creationDate>
+  <date>1339452590000</date>
+  <contentUpdateDate>1339452590000</contentUpdateDate>
+  <version>1.1</version>
+  <title>Social authentication</title>
+  <template/>
+  <defaultTemplate/>
+  <validationScript/>
+  <comment/>
+  <minorEdit>false</minorEdit>
+  <syntaxId>xwiki/2.0</syntaxId>
+  <hidden>false</hidden>
+  <attachment>
+    <filename>socialauth-2.2.jar</filename>
+    <filesize>139396</filesize>
+    <author>xwiki:XWiki.jvelo</author>
+    <date>1339449333000</date>
+    <version>1.1</version>
+    <comment/>
+    <content>UEsDBAoAAAAAAKGrQkAAAAAAAAAAAAAAAAAJAAAATUVUQS1JTkYvUEsDBAoAAAAIAKCrQkBWPw9u
 ZgAAAH0AAAAUAAAATUVUQS1JTkYvTUFOSUZFU1QuTUbzTczLTEstLtENSy0qzszPs1Iw1DPg5XIs
 Ss7ILEstQggH5KRWlBYrwCR4uZyLUhNLUlN0nSqtFBwLEpMzUhV8E8tS83i5nEozc0rA4iWJRaV5
 UJEUXa+UbJDxZnoG8UbmvFy8XABQSwMECgAAAAAAk5omPwAAAAAAAAAAAAAAAAQAAABvcmcvUEsD
@@ -2473,127 +2476,128 @@ ALGNQkDApPGobgMAAPcLAAAuAAAAAAAAAAAAAACkge0FAgBNRVRBLUlORi9tYXZlbi9vcmcuYnJp
 Y2tyZWQvc29jaWFsYXV0aC9wb20ueG1sUEsBAhQDCgAAAAgAD45CQGI9+F5rAAAAbgAAADUAAAAA
 AAAAAAAAAKSBpwkCAE1FVEEtSU5GL21hdmVuL29yZy5icmlja3JlZC9zb2NpYWxhdXRoL3BvbS5w
 cm9wZXJ0aWVzUEsFBgAAAAA+AD4ACRYAAGUKAgAAAA==
-</content></attachment>
-<object>
-<class>
-<name>XWiki.RequiredRightClass</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<level>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>level</name>
-<number>1</number>
-<picker>0</picker>
-<prettyName>level</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<sort>none</sort>
-<unmodifiable>0</unmodifiable>
-<validationMessage></validationMessage>
-<validationRegExp></validationRegExp>
-<values>edit|programming</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</level>
-</class>
-<name>XWiki.SocialLogin</name>
-<number>0</number>
-<className>XWiki.RequiredRightClass</className>
-<guid>bda8fbc0-0805-4198-a66d-1be0915aaa01</guid>
-<property>
-<level>programming</level>
-</property>
-</object>
-<object>
-<class>
-<name>XWiki.StyleSheetExtension</name>
-<customClass></customClass>
-<customMapping></customMapping>
-<defaultViewSheet></defaultViewSheet>
-<defaultEditSheet></defaultEditSheet>
-<defaultWeb></defaultWeb>
-<nameField></nameField>
-<validationScript></validationScript>
-<cache>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>cache</name>
-<number>5</number>
-<prettyName>Caching policy</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>long|short|default|forbid</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</cache>
-<code>
-<disabled>0</disabled>
-<name>code</name>
-<number>2</number>
-<prettyName>Code</prettyName>
-<rows>20</rows>
-<size>50</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
-</code>
-<name>
-<disabled>0</disabled>
-<name>name</name>
-<number>1</number>
-<prettyName>Name</prettyName>
-<size>30</size>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.StringClass</classType>
-</name>
-<parse>
-<disabled>0</disabled>
-<displayFormType>select</displayFormType>
-<displayType>yesno</displayType>
-<name>parse</name>
-<number>4</number>
-<prettyName>Parse content</prettyName>
-<unmodifiable>0</unmodifiable>
-<classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
-</parse>
-<use>
-<cache>0</cache>
-<disabled>0</disabled>
-<displayType>select</displayType>
-<multiSelect>0</multiSelect>
-<name>use</name>
-<number>3</number>
-<prettyName>Use this extension</prettyName>
-<relationalStorage>0</relationalStorage>
-<separator> </separator>
-<separators> ,|</separators>
-<size>1</size>
-<unmodifiable>0</unmodifiable>
-<values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
-<classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
-</use>
-</class>
-<name>XWiki.SocialLogin</name>
-<number>0</number>
-<className>XWiki.StyleSheetExtension</className>
-<guid>9f55299f-2ebd-47e4-8a3b-b18ac80e0034</guid>
-<property>
-<cache>long</cache>
-</property>
-<property>
-<code>#loginForm fieldset.xwikimessage {
+</content>
+  </attachment>
+  <object>
+    <class>
+      <name>XWiki.RequiredRightClass</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <level>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>level</name>
+        <number>1</number>
+        <picker>0</picker>
+        <prettyName>level</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <sort>none</sort>
+        <unmodifiable>0</unmodifiable>
+        <validationMessage/>
+        <validationRegExp/>
+        <values>edit|programming</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </level>
+    </class>
+    <name>XWiki.SocialLogin</name>
+    <number>0</number>
+    <className>XWiki.RequiredRightClass</className>
+    <guid>bda8fbc0-0805-4198-a66d-1be0915aaa01</guid>
+    <property>
+      <level>programming</level>
+    </property>
+  </object>
+  <object>
+    <class>
+      <name>XWiki.StyleSheetExtension</name>
+      <customClass/>
+      <customMapping/>
+      <defaultViewSheet/>
+      <defaultEditSheet/>
+      <defaultWeb/>
+      <nameField/>
+      <validationScript/>
+      <cache>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>cache</name>
+        <number>5</number>
+        <prettyName>Caching policy</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>long|short|default|forbid</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </cache>
+      <code>
+        <disabled>0</disabled>
+        <name>code</name>
+        <number>2</number>
+        <prettyName>Code</prettyName>
+        <rows>20</rows>
+        <size>50</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.TextAreaClass</classType>
+      </code>
+      <name>
+        <disabled>0</disabled>
+        <name>name</name>
+        <number>1</number>
+        <prettyName>Name</prettyName>
+        <size>30</size>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.StringClass</classType>
+      </name>
+      <parse>
+        <disabled>0</disabled>
+        <displayFormType>select</displayFormType>
+        <displayType>yesno</displayType>
+        <name>parse</name>
+        <number>4</number>
+        <prettyName>Parse content</prettyName>
+        <unmodifiable>0</unmodifiable>
+        <classType>com.xpn.xwiki.objects.classes.BooleanClass</classType>
+      </parse>
+      <use>
+        <cache>0</cache>
+        <disabled>0</disabled>
+        <displayType>select</displayType>
+        <multiSelect>0</multiSelect>
+        <name>use</name>
+        <number>3</number>
+        <prettyName>Use this extension</prettyName>
+        <relationalStorage>0</relationalStorage>
+        <separator> </separator>
+        <separators> ,|</separators>
+        <size>1</size>
+        <unmodifiable>0</unmodifiable>
+        <values>currentPage=Always on this page|onDemand=On demand|always=Always on this wiki</values>
+        <classType>com.xpn.xwiki.objects.classes.StaticListClass</classType>
+      </use>
+    </class>
+    <name>XWiki.SocialLogin</name>
+    <number>0</number>
+    <className>XWiki.StyleSheetExtension</className>
+    <guid>9f55299f-2ebd-47e4-8a3b-b18ac80e0034</guid>
+    <property>
+      <cache>long</cache>
+    </property>
+    <property>
+      <code>#loginForm fieldset.xwikimessage {
   width:550px;
 }
 
@@ -2613,18 +2617,18 @@ cm9wZXJ0aWVzUEsFBgAAAAA+AD4ACRYAAGUKAgAAAA==
 #createUsernameForm fieldset.xwikimessage p.message {
   margin-top:15px;
 }</code>
-</property>
-<property>
-<name></name>
-</property>
-<property>
-<parse>0</parse>
-</property>
-<property>
-<use>onDemand</use>
-</property>
-</object>
-<content>{{groovy jars="attach:socialauth-2.2.jar"}}
+    </property>
+    <property>
+      <name/>
+    </property>
+    <property>
+      <parse>0</parse>
+    </property>
+    <property>
+      <use>onDemand</use>
+    </property>
+  </object>
+  <content>{{groovy jars="attach:socialauth-2.2.jar"}}
 import org.brickred.socialauth.SocialAuthConfig
 import org.brickred.socialauth.SocialAuthManager
 import org.brickred.socialauth.util.SocialAuthUtil
@@ -2833,4 +2837,5 @@ ${msg.get('xwiki.socialLogin.nothingToDo')}
 {{/info}}
 """
 }
-{{/groovy}}</content></xwikidoc>
+{{/groovy}}</content>
+</xwikidoc>
