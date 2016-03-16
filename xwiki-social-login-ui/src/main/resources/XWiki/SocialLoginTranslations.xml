@@ -32,6 +32,7 @@ xwiki.socialLogin.usernameAlreadyTaken=Username already taken
 xwiki.socialLogin.nothingToDo=Nothing to do
 xwiki.socialLogin.genericError=Something went wrong : {0}
 xwiki.socialLogin.unauthorizedDomainError=You are not from an authorized domain
+xwiki.socialLogin.registrationAlreadyStarted=You already have a pending registration for {0} click to finalize
 xwiki.socialLogin.signInWith=Sign in with {0}
 
 xwiki.social.facebook=Facebook</content></xwikidoc>
