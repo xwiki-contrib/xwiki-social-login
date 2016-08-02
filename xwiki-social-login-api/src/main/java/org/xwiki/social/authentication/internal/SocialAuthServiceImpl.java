@@ -114,10 +114,13 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
         LOGGER.debug("Social login authenticate...");
 
         HttpServletRequest request = context.getRequest();
-        
+
         SocialAuthenticationManager manager = Utils.getComponent(SocialAuthenticationManager.class);
-        
-        if (StringUtils.isBlank(request.getParameter(PROVIDER_PARAMETER)) && !manager.isConnected()) {
+
+        SocialAuthSession session = manager.getSession();
+
+        if (StringUtils.isBlank(request.getParameter(PROVIDER_PARAMETER))
+            && (session == null || session.getCurrentProvider() == null) && !manager.isConnected()) {
             // Passing along to XWiki authentication
 
             // TODO add a parameter in configuration to declare if normal XWiki auth is allowed
@@ -127,8 +130,6 @@ public class SocialAuthServiceImpl extends XWikiAuthServiceImpl implements Socia
             return super.authenticate(login, password, context);
         }
 
-        SocialAuthSession session = manager.getSession();
-        
         String provider =
             StringUtils.defaultIfBlank(session != null ? session.getCurrentProvider() : null,
                 request.getParameter(PROVIDER_PARAMETER));

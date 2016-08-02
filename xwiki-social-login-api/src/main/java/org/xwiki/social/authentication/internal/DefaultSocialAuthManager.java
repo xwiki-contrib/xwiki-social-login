@@ -338,6 +338,7 @@ public class DefaultSocialAuthManager implements SocialAuthenticationManager, So
 
             // Save the manager in session : we will need this one on the way back from OAuth to validate the response
             SocialAuthSession session = new SocialAuthSession(manager);
+            session.setCurrentProvider(provider);
             httpSession.setAttribute(SOCIAL_AUTH_SESSION_ATTRIBUTE, session);
 
             Permission urlPermission = null;
